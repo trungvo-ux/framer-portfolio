@@ -1,0 +1,1 @@
+wget --mirror --page-requisites --convert-links --adjust-extension --no-parent -e robots=off https://kind-action-155196.framer.app/
