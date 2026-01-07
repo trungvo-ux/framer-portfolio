@@ -88,5 +88,21 @@ def main():
 
     print("Done.")
 
+    print("Running git operations...")
+    try:
+        subprocess.run(["git", "add", "."], check=True)
+        # Check if there are changes to commit
+        status = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
+        if status.stdout.strip():
+            subprocess.run(["git", "commit", "-m", "Update portfolio site"], check=True)
+            subprocess.run(["git", "push"], check=True)
+            print("Successfully pushed changes to GitHub.")
+        else:
+            print("No changes to commit.")
+            
+    except subprocess.CalledProcessError as e:
+        print(f"Error executing git command: {e}")
+        sys.exit(1)
+
 if __name__ == "__main__":
     main()
