@@ -11,7 +11,45 @@
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---- load reveal: arms the hero line masks ---- */
+  /* ---- word-split: wrap each word of [data-split] in an overflow mask.
+     Word-level (not line-level) so it survives any viewport wrapping,
+     and nested inline elements (em, strong) keep their styling. ---- */
+  const splitWords = (root, baseDelay) => {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (walker.nextNode()) {
+      if (walker.currentNode.nodeValue.trim()) textNodes.push(walker.currentNode);
+    }
+    let i = 0;
+    for (const node of textNodes) {
+      const frag = document.createDocumentFragment();
+      for (const token of node.nodeValue.split(/(\s+)/)) {
+        if (!token) continue;
+        if (!token.trim()) {
+          frag.appendChild(document.createTextNode(token));
+          continue;
+        }
+        const mask = document.createElement("span");
+        mask.className = "mask-w";
+        const w = document.createElement("span");
+        w.className = "w";
+        w.textContent = token;
+        // tight per-word stagger, capped so long sentences don't drag
+        w.style.setProperty("--d", `${(baseDelay + Math.min(i * 0.035, 0.45)).toFixed(3)}s`);
+        mask.appendChild(w);
+        frag.appendChild(mask);
+        i++;
+      }
+      node.parentNode.replaceChild(frag, node);
+    }
+  };
+
+  document.querySelectorAll("[data-split]").forEach((el) => {
+    if (!reduceMotion) splitWords(el, parseFloat(el.dataset.delay || "0"));
+    el.classList.add("is-split");
+  });
+
+  /* ---- load reveal: arms the word masks ---- */
   document.documentElement.classList.add("is-loaded");
 
   /* ---- scroll reveals ---- */

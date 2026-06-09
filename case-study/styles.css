@@ -217,16 +217,21 @@ a {
   color: var(--ink-2);
 }
 
-/* line-mask reveal: each .line is wrapped in an overflow-hidden mask */
-.mask {
-  display: block;
+/* word-mask reveal: script.js wraps each word of [data-split] in an
+   overflow-hidden mask so the rise survives any line wrapping.
+   Hidden pre-split only when JS is running (html.js) to avoid FOUC. */
+.js [data-split]:not(.is-split) { opacity: 0; }
+
+.mask-w {
+  display: inline-block;
   overflow: hidden;
+  vertical-align: bottom;
 }
-.mask > .line {
-  display: block;
-  transform: translateY(110%);
+.mask-w > .w {
+  display: inline-block;
+  transform: translateY(115%);
 }
-.is-loaded .mask > .line {
+.is-loaded .mask-w > .w {
   animation: rise var(--dur) var(--ease-out) forwards;
   animation-delay: var(--d, 0s);
 }
@@ -602,8 +607,9 @@ ul.checks li::before {
   ::view-transition-old(root),
   ::view-transition-new(root) { animation: none; }
 
-  .mask > .line { transform: none; }
-  .is-loaded .mask > .line { animation: none; }
+  .js [data-split]:not(.is-split) { opacity: 1; }
+  .mask-w > .w { transform: none; }
+  .is-loaded .mask-w > .w { animation: none; }
 
   [data-reveal] {
     opacity: 1;
