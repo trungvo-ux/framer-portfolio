@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Case study — rebuilding Ledger's checkout to earn trust at the moment of payment. Research, process, and measured results.">
+  <meta name="view-transition" content="same-origin">
+  <title>Ledger — Rebuilding checkout for trust · Trung Vo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..650&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" data-progress aria-hidden="true"></div>
+
+  <header class="site-header" data-header>
+    <div class="container">
+      <a class="wordmark" href="index.html">Trung Vo</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a class="u-link" href="index.html#work" aria-current="page">Work</a>
+        <a class="u-link" href="index.html#about">About</a>
+        <a class="u-link" href="mailto:trungvanvo.823@gmail.com">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <header class="cs-hero container">
+      <a class="back" href="index.html#work">
+        <span aria-hidden="true">←</span> All work
+      </a>
+      <h1>
+        <span class="mask"><span class="line" style="--d:0s">Rebuilding checkout</span></span>
+        <span class="mask"><span class="line" style="--d:.08s">to earn <em class="serif">trust</em> at the</span></span>
+        <span class="mask"><span class="line" style="--d:.16s">moment of payment.</span></span>
+      </h1>
+
+      <dl class="cs-meta" data-reveal>
+        <div>
+          <dt>Client</dt>
+          <dd>Ledger (fintech)</dd>
+        </div>
+        <div>
+          <dt>Role</dt>
+          <dd>Lead Product Designer</dd>
+        </div>
+        <div>
+          <dt>Timeline</dt>
+          <dd>12 weeks · 2025</dd>
+        </div>
+        <div>
+          <dt>Team</dt>
+          <dd>2 engineers, 1 PM, 1 researcher</dd>
+        </div>
+      </dl>
+    </header>
+
+    <div class="container">
+      <figure class="figure" data-reveal>
+        <div class="frame">
+          <div class="mock">
+            <div class="card" role="presentation">
+              <div class="bar w-40"></div>
+              <div class="bar w-80"></div>
+              <div class="bar w-60"></div>
+              <div class="bar accent"></div>
+            </div>
+          </div>
+        </div>
+        <figcaption>The redesigned single-page checkout — one decision per screen region, one primary action.</figcaption>
+      </figure>
+    </div>
+
+    <article class="cs-body container">
+
+      <section class="cs-section">
+        <div class="cs-grid">
+          <h2 data-reveal>Overview</h2>
+          <div class="prose" data-reveal style="--d:.08s">
+            <p>
+              Ledger's checkout converted well on paper and poorly in practice:
+              users started payment, hesitated, and left. Drop-off concentrated on the
+              final step — the one asking for money. Our hypothesis was that the
+              problem wasn't friction, it was <strong>doubt</strong>.
+            </p>
+            <p>
+              Over twelve weeks we re-designed the flow around a single principle:
+              every screen must answer "what happens next, and can I undo it?"
+              before it asks for anything.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-section">
+        <div class="cs-grid">
+          <h2 data-reveal>The problem</h2>
+          <div class="prose" data-reveal style="--d:.08s">
+            <p>
+              Session recordings showed a distinctive pattern: at the payment step,
+              users scrolled up and down repeatedly, re-checking the amount, the fee,
+              and the recipient. The interface answered each question on a different
+              screen, so re-checking meant going backwards — and going backwards
+              cleared form state.
+            </p>
+            <ul class="checks">
+              <li>41% of started checkouts were abandoned at the payment step.</li>
+              <li>Fees were revealed only on the confirmation screen.</li>
+              <li>"Back" lost user input, punishing the act of double-checking.</li>
+              <li>Support tickets clustered around "was I charged twice?"</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-section">
+        <div class="cs-grid">
+          <h2 data-reveal>Research</h2>
+          <div class="prose" data-reveal style="--d:.08s">
+            <p>
+              We ran nine moderated sessions and a diary study with recent churners.
+              The most useful finding was emotional, not mechanical: people described
+              the old flow as a hallway of closed doors — each step hid what the
+              next one would ask.
+            </p>
+          </div>
+        </div>
+
+        <blockquote class="pull-quote" data-reveal>
+          "I just want to see the whole bill before I put my card number in.
+          Is that weird?"
+          <cite>— Participant 06, diary study</cite>
+        </blockquote>
+
+        <figure class="figure is-tall" data-reveal>
+          <div class="frame">
+            <div class="mock is-duo">
+              <div class="card" role="presentation">
+                <div class="bar w-60"></div>
+                <div class="bar w-80"></div>
+                <div class="bar w-40"></div>
+              </div>
+              <div class="card" role="presentation">
+                <div class="bar w-40"></div>
+                <div class="bar w-60"></div>
+                <div class="bar accent"></div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Before / after — five sequential screens collapsed into one reviewable page with a persistent summary.</figcaption>
+        </figure>
+      </section>
+
+      <section class="cs-section">
+        <div class="cs-grid">
+          <h2 data-reveal>Design principles</h2>
+          <div class="prose" data-reveal style="--d:.08s">
+            <p>Three rules shaped every screen that followed:</p>
+            <ul class="checks">
+              <li><strong>Total cost first.</strong> Amount, fee, and arrival time visible before any input is requested.</li>
+              <li><strong>Checking is free.</strong> All steps live on one page; editing one never resets another.</li>
+              <li><strong>Confirmation is a receipt.</strong> The final screen mirrors the summary the user already approved — no new information at the moment of commitment.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="cs-section">
+        <div class="cs-grid">
+          <h2 data-reveal>Outcome</h2>
+          <div class="prose" data-reveal style="--d:.08s">
+            <p>
+              We shipped behind a 50/50 experiment and held it for six weeks —
+              long enough to cover two billing cycles and rule out novelty effects.
+            </p>
+          </div>
+        </div>
+
+        <div class="stat-row" data-reveal>
+          <div class="stat">
+            <p class="value">−38%</p>
+            <p class="label">abandonment at the payment step</p>
+          </div>
+          <div class="stat">
+            <p class="value">+19%</p>
+            <p class="label">completed checkouts overall</p>
+          </div>
+          <div class="stat">
+            <p class="value">−54%</p>
+            <p class="label">"was I charged?" support tickets</p>
+          </div>
+        </div>
+
+        <div class="cs-grid">
+          <div aria-hidden="true"></div>
+          <div class="prose" data-reveal>
+            <p>
+              The quieter result mattered most: median time on the payment step went
+              <em>up</em> by eleven seconds. Users weren't rushing through —
+              they were reading, deciding, and staying.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </article>
+
+    <section class="next">
+      <div class="container">
+        <a href="index.html#work" data-reveal>
+          <p class="label">Next</p>
+          <p class="title">Back to all work <span class="arrow" aria-hidden="true">→</span></p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 Trung Vo</span>
+      <nav aria-label="Footer">
+        <a class="u-link" href="mailto:trungvanvo.823@gmail.com">Email</a>
+        <a class="u-link" href="https://github.com/trungvo-ux" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
